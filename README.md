@@ -1,6 +1,6 @@
 # AWS_Lambda_with_S3
 
-# Purpose : Create a lamda function to generate email notification once object gets uploaded in S3 bucket.
+#### Purpose : Create a lamda function to generate email notification once object gets uploaded in S3 bucket.
 
 # Steps :
 1. Create a Lambda function
