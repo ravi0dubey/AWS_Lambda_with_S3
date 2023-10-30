@@ -1,0 +1,32 @@
+
+
+## python code
+import json
+import urllib.parse
+import boto3
+
+print('loading function')
+
+s3= boto3.client('s3')
+ses = boto3.client('ses')
+
+
+def lambda_handler(event,context):
+    bucket = event['Records'][0]['s3']['bucket']['name']
+    print(bucket)
+    key = urllib.parse.unquote_plus(event['Records'][0]['s3']['object']['key'],encoding= 'utf-8')
+    try:
+       response = s3.get_object(Bucket=bucket, Key=key)
+       print("CONTENT TYPE:" + response['ContentType'])
+       subject = "Email from AWS bucket"
+       body    = "File got uploaded into AWS bucket"   
+       message = {"Subject":{"Data":subject},"Body":{"Html":{"Data":body}}}
+       res = ses.send_email(Source = "ravidatascience4@gmail.com", Destination = {"ToAddresses":["ravidatascience4@gmail.com"]}, Message = message)
+       return response['ContentType']
+
+    except Exception as e:
+       print(e)
+       print('Error getting object {} from bucket {}. Make sure they exist"')
+ 
+ 
+
